@@ -1,0 +1,80 @@
+<h2 class="text-center my-3">Temperature Convertor</h2>
+
+<div class="container">
+  <form [formGroup]="temperatureConvertorForm" (ngSubmit)="convert()">
+    <div class="row">
+      <div class="col-4">
+        <label class="form-label">Degree</label>
+        <input
+          type="text"
+          class="form-control"
+          formControlName="temperature"
+          placeholder="temperature"
+          required
+        />
+        <div
+          *ngIf="
+            temperatureConvertorForm.get('temperature').invalid &&
+            temperatureConvertorForm.get('temperature').errors &&
+            (temperatureConvertorForm.get('temperature').touched ||
+              temperatureConvertorForm.get('temperature').dirty)
+          "
+        >
+          <small
+            class="text-danger"
+            *ngIf="
+              temperatureConvertorForm.get('temperature').hasError('required')
+            "
+          >
+            This field is Required
+          </small>
+          <small
+            class="text-danger"
+            *ngIf="
+              temperatureConvertorForm.get('temperature').hasError('pattern')
+            "
+          >
+            Only numbers are allowed
+          </small>
+        </div>
+      </div>
+      <div class="col-4">
+        <label class="form-label">Type</label>
+        <select class="form-select" formControlName="type" required>
+          <option value="C">Celsius</option>
+          <option value="F">Fahrenheit</option>
+        </select>
+        <div
+          *ngIf="
+            temperatureConvertorForm.get('type').invalid &&
+            temperatureConvertorForm.get('type').errors &&
+            (temperatureConvertorForm.get('type').touched ||
+              temperatureConvertorForm.get('type').dirty)
+          "
+        >
+          <small
+            class="text-danger"
+            *ngIf="temperatureConvertorForm.get('type').hasError('required')"
+          >
+            This field is Required
+          </small>
+        </div>
+      </div>
+
+      <div class="col-4 d-flex align-items-end">
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="temperatureConvertorForm.invalid"
+        >
+          Convert
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div *ngIf="temperatureConvertorForm.valid && result" class="my-3 col-6 mx-3">
+  <label class="form-label">Result</label>
+  <h3>{{ result }}</h3>
+</div>
